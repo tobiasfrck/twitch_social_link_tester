@@ -150,7 +150,7 @@ def run_tester(url, debug):
     else:
         print(colored(f"[{url}] {dead_links_count} Links sind veraltet.", 'red'))
         print(colored(f"[{url}] Veraltete Links: {dead_links}", 'red'))
-    print("--------------------")
+    print("---------------------------")
             
 
     # Schließe den Webdriver
@@ -167,7 +167,7 @@ def load_streams(url):
     wait = WebDriverWait(driver, 10)
     time.sleep(1)
     try:
-        element = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "lgdxlP")))
+        element = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "bYReYr")))
     except selenium.common.exceptions.TimeoutException:
         print("could not find layout")
         return
@@ -204,7 +204,7 @@ def load_streams(url):
 
 while(1):
     url = input("Enter the twitch-profile-url (twitch.tv/[username]): ")
-    if "https://www.twitch.tv/directory/all" in url:
+    if "https://www.twitch.tv/directory/" in url:
         load_streams(url)
         exit()
     run_tester(url, True)
