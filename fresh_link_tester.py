@@ -4,18 +4,22 @@ import datetime
 from selenium import webdriver
 import time
 import selenium
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from termcolor import colored
 import sys
 import re
+from selenium.webdriver.firefox.options import Options
+
 
 options = webdriver.ChromeOptions()
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
+#options.add_argument("user-data-dir=C:\\Users\\tobia\\AppData\\Local\\Google\\Chrome\\User Data\\Default")
 
 
-
+ 
 
 
 def run_tester(url, debug):
@@ -26,6 +30,16 @@ def run_tester(url, debug):
     
     # Starte den Webdriver
     driver = webdriver.Chrome(options=options)
+    #driver = webdriver.Firefox(options=options)
+
+    #cookies = {}
+    #with open("cookies.txt") as f:
+    #    for line in f:
+    #        name, value, domain = line.strip().split("\t")
+    #        cookies[name] = value
+
+    #s = requests.Session()
+    #s.cookies.update(cookies)
 
     # Lade die Seite
     driver.get(url)
@@ -130,6 +144,8 @@ def run_tester(url, debug):
             if outdated==True:
                 if debug == True:
                     print(colored(f"[Seite '{link}' ist wahrscheinlich veraltet.]", 'red'))
+                    dead_links.append(link)
+                    dead_links_count+=1
                 else:
                     dead_links.append(link)
                     dead_links_count+=1
@@ -143,9 +159,9 @@ def run_tester(url, debug):
         if debug == True:
             print("-------------------")
 
-    url=url.split("www.twitch.tv/")[1].split("/")[0]  
     print("----------Summary----------")
     if dead_links_count==0:
+        url=url.split("www.twitch.tv/")[1].split("/")[0]  
         print(colored(f"[{url}] Alle Links sind aktuell.", 'green'))
     else:
         print(colored(f"[{url}] {dead_links_count} Links sind veraltet.", 'red'))
@@ -159,6 +175,16 @@ def run_tester(url, debug):
 def load_streams(url):
     # Starte den Webdriver
     driver = webdriver.Chrome(options=options)
+    #driver = webdriver.Firefox(options=options)
+
+    cookies = {}
+    with open("cookies.txt") as f:
+        for line in f:
+            name, value, domain = line.strip().split("\t")
+            cookies[name] = value
+
+    s = requests.Session()
+    s.cookies.update(cookies)
 
     # Lade die Seite
     driver.get(url)
@@ -206,5 +232,5 @@ while(1):
     url = input("Enter the twitch-profile-url (twitch.tv/[username]): ")
     if "https://www.twitch.tv/directory/" in url:
         load_streams(url)
-        exit()
-    run_tester(url, True)
+    else:
+        run_tester(url, True)
