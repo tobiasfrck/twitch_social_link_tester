@@ -10,7 +10,8 @@ When the link contain Twitter, YouTube, Instagram, TikTok or Discord it will be 
 Then the script loads each of of those links, waits in some cases for it to load and checks them for keywords indicating an outdated profile on that url. This is currently not a very good method because a retweet of a deleted tweet can lead to the profile being marked as outdated.
 
 ### Category search mode
-This loads the category link you provided and loads all twitch streams on the first page of the category url. There is currently no support for cookies, so either you specify to rank by lower view count to higher view count or get all popular streamers where it is unlikely to detect outdated links.
+This loads the category link you provided and loads all twitch streams on the first page of the category url. Then it executes the same code for the "Single profile mode" for each found Twitch profile.\
+There is currently no support for cookies, so either you specify to rank by lower view count to higher view count or get all popular streamers where it is unlikely to detect outdated links.
 
 ## Why?
 I don't know. I don't like outdated links and I wanted to have a reason to interact with people.
